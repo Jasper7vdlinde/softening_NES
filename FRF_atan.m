@@ -3,20 +3,28 @@
 % stiffness : kappa*atan(\bar{z})
 
 clearvars;
-%close all;
+close all;
 clc;
 %% Define system
 
 %Host system
-w_i = 36;
-xi = 0.2;
-m = 1;
-P =5; % Forcing
+w_n = 36*2*pi; %Hz
+m = 1.26; %[kg]
+P = 100; % Forcing  change {50, 100, 200, 300}
+
+
+c = 1;
 
 %NES 
-xi_na = 0.2;
-kappa = 2.5;
-ep = 0.02;
+m_na = 0.26; %[kg]
+k_na = 20.76; %[N]
+alpha = 3.51e3; %[/m]
+c_na = 5; %[Ns/m]
+
+xi = c/m_na/w_n;
+xi_na = c_na/m_na/w_n;
+kappa = (k_na*alpha/m_na) / w_n^2; 
+ep = m_na/m; % 260/1260
 
 Om = linspace(0.75,1.25,1000); % Frequency vector
 
@@ -201,9 +209,9 @@ xlim([min(Om) max(Om)])
 
 
 
-%% Time simulations, comment out as takes a while
-
-% Time sim
+% %% Time simulations, comment out as takes a while
+% 
+% % Time sim
 %     Tl =5000;
 % 
 %     t=0:0.1:Tl;
@@ -239,7 +247,7 @@ xlim([min(Om) max(Om)])
 % 
 %      A_main(i)=rms(Y1(round(3*length(Y1)/4):end,1))*sqrt(2);
 %     B_main(i)=rms(Y1(round(3*length(Y1)/4):end,2)-Y1(round(3*length(Y1)/4):end,1))*sqrt(2);
-%     
+% 
 %     TF = islocalmin(envY,'MinSeparation',100,'SamplePoints',T1);
 %     if(length(TF)>0)
 %             envY_min = envY(TF)
@@ -251,11 +259,11 @@ xlim([min(Om) max(Om)])
 %                 A_main_max(i)=max(envY(round(3*length(Y1)/4):end));
 %                     B_main_min(i)=min(envB(round(3*length(Y1)/4):end));
 %                 B_main_max(i)=max(envB(round(3*length(Y1)/4):end));
-%                 
+% 
 %                  if(A_main_max(i)/ A_main(i) < 1.1)
 %          A_main_max(i)=NaN;
 %                  end
-%      
+% 
 %     else
 %      A_main_min(i)= NaN;
 %                    % A_main_min(i)=min(envY(round(3*length(Y1)/4):end));
@@ -263,7 +271,7 @@ xlim([min(Om) max(Om)])
 %                     B_main_min(i)= NaN;
 %                 B_main_max(i)= NaN;
 %     end
-%     
+% 
 % % 
 % % 
 % % 
