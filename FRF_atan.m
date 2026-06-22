@@ -8,17 +8,17 @@ clc;
 %% Define system
 
 %Host system
-w_i = 1;
+w_i = 36;
 xi = 0.2;
 m = 1;
-P =9; % Forcing
+P =5; % Forcing
 
 %NES 
 xi_na = 0.2;
-kappa = 5;
+kappa = 2.5;
 ep = 0.02;
 
-Om = linspace(0.93,1.03,1000); % Frequency vector
+Om = linspace(0.75,1.25,1000); % Frequency vector
 
 for i=1:length(Om)
     
